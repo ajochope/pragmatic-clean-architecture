@@ -1,0 +1,46 @@
+dotnet new sln -n Bookify
+
+mkdir src
+mkdir test
+
+cd src
+
+// Domain
+dotnet new classlib -n Bookify.Domain
+
+// add a project to a solution
+// dotnet sln [path-to-solution-file] add [path-to-project-file]
+dotnet sln Bookify.sln add  src/Bookify.Domain/Bookify.Domain.csproj
+
+mkdir Entities se renombra a Apartments
+
+// En el terminal OSX:
+dotnet add package MediatR.Contracts --version 2.0.1
+
+// Application
+dotnet new classlib -n Bookify.Application
+
+// add a project to a solution
+// dotnet sln [path-to-solution-file] add [path-to-project-file]
+dotnet sln Bookify.sln add  src/Bookify.Application/Bookify.Application.csproj
+
+// En el terminal OSX:
+dotnet add package MediatR --version 12.2.0
+
+//Add Bookify.Domain project Reference to Bookify.Application
+dotnet add reference ../Bookify.Domain/Bookify.Domain.csproj
+Deberiamos tener crea la referencia en el fichero: Bookify.Application.csproj 
+            <ItemGroup>
+                <ProjectReference Include="..\Bookify.Domain\Bookify.Domain.csproj" />
+            </ItemGroup>
+
+// CQRS se implementa en la carpeta Abstractions\Messaging dentro de Bookify.Application
+
+cd src/Bookify.Application
+dotnet add package Dapper --version 2.1.35
+
+// Login an Application ---> Logging.Abstractions 
+dotnet add package Microsoft.Extensions.Logging.Abstractions --version 8.0.1
+
+// FluentValidation.DependencyInjectionExtensions 
+dotnet add package FluentValidation.DependencyInjectionExtensions --version 11.9.1
